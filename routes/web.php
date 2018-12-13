@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::get('/dashboard', 'HomeController@index')->name('dashboard')->middleware('verified');
+Route::get('/homes', 'HomeController@index')->name('home')->middleware('verified');
 /* social login */
 Route::get('login/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
