@@ -1,4 +1,5 @@
 <?php
+use App\Http\Middleware\checkAdmin;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,11 +19,10 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 
 Route::get('/homes', 'HomeController@index')->name('home')->middleware('verified');
+Route::get('/Admin', 'AdminController@index')->name('Admin')->middleware('verified','checkAdmin');
+
 /* social login */
 Route::get('login/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
 
 
-Route::view('/admin','layouts/dashboard');
-Route::view('/about','layouts/aboutus');
-Route::view('/main','layouts/main');
