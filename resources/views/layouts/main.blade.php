@@ -114,9 +114,7 @@
         </li>
      </ul>
       <div id="content-wrapper">
-        <div class="row">
            @yield('content')
-        </div>
       </div>
     </div>
         <!-- /.container-fluid -->
