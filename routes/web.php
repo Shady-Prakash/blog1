@@ -18,13 +18,26 @@ Route::get('/', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::get('/homes', 'HomeController@index')->name('home')->middleware('verified');
+Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
 Route::get('/Admin', 'AdminController@index')->name('Admin')->middleware('verified','checkAdmin');
 
 /* social login */
 Route::get('login/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
 
+// admin post route
+Route::middleware(['verified'])->prefix('Admin')->group(function(){
+Route::post('post','PostController@store')->name('post.store');
+Route::get('post/create', 'PostController@create')->name('post.create');
+Route::get('post/index', 'PostController@index')->name('post.index');
+Route::get('post/edit/{id}', 'PostController@edit')->name('post.edit');
+Route::get('post/show/{id}', 'PostController@show')->name('post.show');
+Route::get('post/update/{id}', 'PostController@update')->name('post.update');
+Route::get('post/delete/{id}', 'PostController@destroy')->name('post.delete');
 
-Route::view('post/index','post.index');
+});
+
+
+
+
 

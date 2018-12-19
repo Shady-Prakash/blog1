@@ -16,7 +16,7 @@ class checkAdmin
     public function handle($request, Closure $next)
     {   
         $user=Auth::user();
-        // dd($user->usertype);
+    
         if($user->usertype == 'admin'){ 
             
             return $next($request);
