@@ -20,6 +20,9 @@ class PostController extends Controller
     public function index()
     {
         //
+        $data=Post::all();
+        return view('post.index')->with('data',$data);
+        // return view('post.index',compact('data','data2','data3'));
     }
 
     /**
@@ -74,6 +77,10 @@ class PostController extends Controller
     public function show($id)
     {
         //
+        $data=Post::findorfail($id);
+        return view('post.show')->with('data',$data);
+
+
     }
 
     /**
@@ -85,6 +92,10 @@ class PostController extends Controller
     public function edit($id)
     {
         //
+        $data=Post::findorfail($id);
+        return view('post.edit')->with('data',$data);
+
+
     }
 
     /**
@@ -97,6 +108,28 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         //
+               $request->validate([
+            'title'=>'required|max:225',
+            'body'=>'required',
+            'featured_img'=>'mimes:jpeg,bmp,png,jpg',
+        ]);
+        $data=Post::findorfail($id);
+        $data->title=$request->get('title');
+        $data->body=$request->get('body');
+        $data->user_id=Auth::id();
+
+        //image upload
+        if($request->hasFile('featured_img')){
+            $image=$request->file('featured_img');
+            $filename=time().'.'.$image->getClientOriginalExtension();
+            $path=public_path('image/');
+            $image->move($path,$filename);
+            $data->featured_img=$filename;
+        }
+        $data->save();
+        return redirect()->route('post.index')->with('status','Updated Successfully');
+
+
     }
 
     /**
@@ -108,5 +141,9 @@ class PostController extends Controller
     public function destroy($id)
     {
         //
+         $data=Post::findorfail($id);
+         $data->delete();
+        return redirect()->route('post.index')->with('status','Deleted Successfully');
+
     }
 }

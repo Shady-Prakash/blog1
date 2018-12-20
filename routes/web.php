@@ -32,8 +32,8 @@ Route::get('post/create', 'PostController@create')->name('post.create');
 Route::get('post/index', 'PostController@index')->name('post.index');
 Route::get('post/edit/{id}', 'PostController@edit')->name('post.edit');
 Route::get('post/show/{id}', 'PostController@show')->name('post.show');
-Route::get('post/update/{id}', 'PostController@update')->name('post.update');
-Route::get('post/delete/{id}', 'PostController@destroy')->name('post.delete');
+Route::post('post/update/{id}', 'PostController@update')->name('post.update');
+Route::delete('post/delete/{id}', 'PostController@destroy')->name('post.delete');
 
 });
 
