@@ -49,6 +49,7 @@ class PostController extends Controller
             'title'=>'required|max:225',
             'body'=>'required',
             'featured_img'=>'mimes:jpeg,bmp,png,jpg',
+            'category'=>'required|max:999',
         ]);
         $data=new Post();
         $data->title=$request->get('title');
@@ -112,6 +113,7 @@ class PostController extends Controller
             'title'=>'required|max:225',
             'body'=>'required',
             'featured_img'=>'mimes:jpeg,bmp,png,jpg',
+            'category'=>'required|max:999',
         ]);
         $data=Post::findorfail($id);
         $data->title=$request->get('title');

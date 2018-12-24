@@ -18,6 +18,7 @@ class CreatePostsTable extends Migration
             $table->string('title');
             $table->longText('body');
             $table->string('featured_img')->default('featured.jpg');
+            $table->string('category');
             $table->timestamps();
 
             $table->unsignedInteger('user_id');
@@ -34,6 +35,6 @@ class CreatePostsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('_posts');
+        Schema::dropIfExists('posts');
     }
 }

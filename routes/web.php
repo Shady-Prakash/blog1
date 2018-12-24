@@ -21,7 +21,7 @@ Auth::routes(['verify' => true]);
 Route::get('/home', 'HomeController@index')->name('home')->middleware('verified');
 Route::get('/Admin', 'AdminController@index')->name('Admin')->middleware('verified','checkAdmin');
 
-/* social login */
+/* socialite login */
 Route::get('login/{provider}', 'Auth\LoginController@redirectToProvider');
 Route::get('login/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
 
