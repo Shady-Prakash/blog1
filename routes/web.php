@@ -35,6 +35,8 @@ Route::get('post/show/{id}', 'PostController@show')->name('post.show');
 Route::post('post/update/{id}', 'PostController@update')->name('post.update');
 Route::delete('post/delete/{id}', 'PostController@destroy')->name('post.delete');
 
+//category
+Route::resource('category', 'CategoryController');
 });
 
 

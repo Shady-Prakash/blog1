@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Post;
 use Illuminate\Http\Request;
 use Auth;
+use App\Category;
 
 class PostController extends Controller
 {
@@ -33,7 +34,9 @@ class PostController extends Controller
     public function create()
     {
         //
-        return view('post.create');
+        $cat=Category::pluck('title','id')->toArray();
+        //dd($cat);
+        return view('post.create')->with('cats',$cat);
     }
 
     /**
@@ -45,15 +48,15 @@ class PostController extends Controller
     public function store(Request $request)
     {
         //
-        $request->validate([
+               $request->validate([
             'title'=>'required|max:225',
             'body'=>'required',
             'featured_img'=>'mimes:jpeg,bmp,png,jpg',
-            'category'=>'required|max:999',
-        ]);
+                    ]);
         $data=new Post();
         $data->title=$request->get('title');
         $data->body=$request->get('body');
+        $data->cat_id=$request->get('category');
         $data->user_id=Auth::id();
 
         //image upload
@@ -72,7 +75,6 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -94,7 +96,12 @@ class PostController extends Controller
     {
         //
         $data=Post::findorfail($id);
-        return view('post.edit')->with('data',$data);
+
+       $cats= Category::pluck('title','id')->toArray();
+       $cat= key(Category::where('id',$data->cat_id)->pluck('title','id')->toArray());
+              // $ct=key(\App\Category::where('id'))
+
+        return view('post.edit',compact('data','cats','cat'));
 
 
     }
@@ -113,11 +120,11 @@ class PostController extends Controller
             'title'=>'required|max:225',
             'body'=>'required',
             'featured_img'=>'mimes:jpeg,bmp,png,jpg',
-            'category'=>'required|max:999',
         ]);
         $data=Post::findorfail($id);
         $data->title=$request->get('title');
         $data->body=$request->get('body');
+        $data->cat_id=$request->get('category');
         $data->user_id=Auth::id();
 
         //image upload
